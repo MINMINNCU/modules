@@ -102,12 +102,16 @@ $register=$obj_helper->getRegister();
         ?>
         <div class="quotation" style="width: auto;">
 
-            <input class='q_obj' style="display: none;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
-            <!-- <img src="<?php echo $url; ?>" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?> -->
-            <img src="/minmin/templates/mynewtemplate/images/level2.png" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?>
+          <input class='q_obj' style="display: none;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
+          <!-- <img src="<?php echo $url; ?>" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?> -->
+          <div style="float:left; height:auto;"><img src="/minmin/templates/mynewtemplate/images/level2.png" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/></div>
 
-            <h2><?php echo $quotations[$i]->quotation; ?></h2>
-            <h3><?php echo $quotations[$i]->description; ?></h3>
+          <div>
+            <div style="height:48px; line-height:48px; font-size:17px; float:left; margin-left:12px">報價 “</div>
+            <div style="height:48px; line-height:48px; font-size:26px;"><?php echo " ".$quotations[$i]->quotation." ”";?></div>
+            <div style="font-size:17px; margin-left:18px;"><?php echo $quotations[$i]->description; ?></div>
+          </div>
+          <p align="right"><?php echo $quotations[$i]->created; ?></p>
 
           <?php if($register->id==$author): ?>
             
