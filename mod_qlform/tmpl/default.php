@@ -83,15 +83,15 @@ var url      = window.location.href;     // returns full url
 
 </script>
 
-<div class="qlform<?php echo $moduleclass_sfx; ?>">
+<div class="qlform<?php echo $moduleclass_sfx; ?>" style="width: auto; height: auto;">
 
 <?php 
 $author=$obj_helper->getAuthor($article_id); 
 $register=$obj_helper->getRegister();
 ?>
 
-<input style="visibility: hidden;" type="text" id="author" value="<?php echo $author; ?>"> <br>
-<input style="visibility: hidden;" type="text" id="register" value="<?php echo $register->id; ?>"> <br>
+<input style="display: none;" type="text" id="author" value="<?php echo $author; ?>"> <br>
+<input style="display: none;" type="text" id="register" value="<?php echo $register->id; ?>"> <br>
 
 <?php for($i = 0; $i < sizeof($quotations); $i++): 
 
@@ -100,11 +100,13 @@ $register=$obj_helper->getRegister();
         $url='/develop/media/k2/users/'.$user[0]->image;
 
         ?>
-        <div class="quotation">
+        <div class="quotation" style="width: auto;">
 
-            <input class='q_obj' style="visibility: hidden;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
-            <img src="<?php echo $url; ?>" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?>
-            <h2>$<?php echo $quotations[$i]->quotation; ?></h2>
+            <input class='q_obj' style="display: none;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
+            <!-- <img src="<?php echo $url; ?>" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?> -->
+            <img src="/minmin/templates/mynewtemplate/images/level2.png" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?>
+
+            <h2><?php echo $quotations[$i]->quotation; ?></h2>
             <h3><?php echo $quotations[$i]->description; ?></h3>
 
           <?php if($register->id==$author): ?>
@@ -127,6 +129,7 @@ $register=$obj_helper->getRegister();
 
       </div>
 
+      <div>
 <?php endfor; ?>
 </div>
 
