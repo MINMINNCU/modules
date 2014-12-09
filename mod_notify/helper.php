@@ -34,7 +34,14 @@ class modNotifyHelper
     {
         $user    = JFactory::getUser() ;  
         $db     = JFactory::getDbo();
-        $db->setQuery('SELECT * FROM `#__k2_items` WHERE `created_by`='.$user->id);  
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('id','title','created_by', 'created')));
+        $query->from($db->quoteName('#__k2_items'));
+        $query->where($db->quoteName('created_by') . ' LIKE '. $user->id);
+        $query->order($db->quoteName('created') .'DESC');
+
+        $db->setQuery($query);
         $objs=$db->loadObjectlist();
         foreach ($objs as $i => $obj) {
             $items[$i][title]=$obj->title;
