@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__) . '/helper.php';
 
-$notice              = modNotifyHelper::getNotice($params) ;
+$notice             = modNotifyHelper::getNotice($params) ;
 $items              = modNotifyHelper::getItem($params) ;
 $moduleclass_sfx    = htmlspecialchars($params->get('moduleclass_sfx'));
 
