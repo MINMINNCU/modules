@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 <style type="text/css">
 <!--
 .chat_wrapper {
-	width: 500px;
+	width: 280px;
 	margin-right: auto;
 	margin-left: auto;
 	background: #CCCCCC;
@@ -48,7 +48,7 @@ $user_colour = array_rand($colours);
 
 $(document).ready(function(){
 	//create a new WebSocket object.
-	var wsUri = "ws://localhost:9000/demo/server.php"; 	
+	var wsUri = "ws://localhost:9000/mod_notify/server.php"; 	
 	websocket = new WebSocket(wsUri); 
 	
 	websocket.onopen = function(ev) { // connection is open 
