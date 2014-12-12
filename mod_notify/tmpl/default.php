@@ -68,7 +68,101 @@ $K2(document).ready(function(){
 
   });
 
+  //送出賣方資料
+  $K2('#ssubmit').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.fillSellerContact";
 
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('請在確認雙方資訊後進行交易活動');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+	//送出買方資料
+  $K2('#bsubmit').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('請在確認雙方資訊後進行交易活動');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+  //賣方已收款
+  $K2('#received_cash').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('請在確認雙方資訊後進行交易活動');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+  //賣方已出貨
+  $K2('#sent_item').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('請在確認雙方資訊後進行交易活動');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
 
 
 

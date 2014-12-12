@@ -802,44 +802,4 @@ class modQlformHelper
         return $register;
     }
 
-  //    public function acceptQuotation()
-  //   {
-        
-	 //   $quotation_id = (int)$_POST["id"];
-	 //   echo 'acceptQuotation' ;
-  //      $db=JFactory::getDbo();
-  //      $db->setQuery('UPDATE `#__quotation` SET `accept`=true WHERE `id`='.$quotation_id);
-  //      $db->query();
-  //   }
-
-  //   function notify($buyer,$seller)
-  //   {     
-		// $date=date("Y-m-d H:i:s");
-  //       $db=JFactory::getDbo();
-  //      	$db->setQuery('INSERT INTO `#__notify`(`from_id`, `to_id`, `type`, `detail`, `created`) VALUES ('.$buyer.','.$seller.',2,RequestForConfirm,'.$date.')');
-  //   }
-
-  //   function confirmQuotation($quotation_id,$confirm)
-  //   {        
-		// $date=date("Y-m-d H:i:s");
-  //       $db=JFactory::getDbo();
-  //      	$db->setQuery('UPDATE `#__quotation` SET `confirm`='.$confirm.',`confirmTime`='.$date.'WHERE `id`='.$quotation_id);
-  //   }
-
-  //   function setStatus($accept,$confirm,$quotation_id)
-  //   {
-              
-  //      	if($accept==true && $confirm=true){
-		// 	$status==true;
-  //      	}
-  //      	else{
-  //      		$status==false;
-  //      	}
-
-  //      	$db=JFactory::getDbo();
-  //      	$db->setQuery('UPDATE `#__quotation` SET `status`='.$status.'WHERE `id`='.$quotation_id);
-
-  //   }
-
-
 }
