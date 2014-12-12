@@ -11,11 +11,10 @@ defined('_JEXEC') or die;
 
 // Include the syndicate functions only once
 require_once dirname(__FILE__) . '/helper.php';
-
-$notice             = modNotifyHelper::getNotice($params) ;
 $items              = modNotifyHelper::getItem($params) ;
 $buy_transactions   = modNotifyHelper::getBuyTransactions($params) ;
 $sell_transactions  = modNotifyHelper::getSellTransactions($params) ;
 $moduleclass_sfx    = htmlspecialchars($params->get('moduleclass_sfx'));
+$register 			= modNotifyHelper::getRegister($params) ;
 
 require JModuleHelper::getLayoutPath('mod_notify', $params->get('layout', 'default'));

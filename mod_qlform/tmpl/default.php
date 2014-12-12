@@ -120,7 +120,7 @@ $register=$obj_helper->getRegister();
               <button class='qbtn' name="accept" disabled >接受報價</button>
             <!-- 此報價已接受 為此報價-->
             <?php else:?>
-              <button class='qbtn' name="accept" disabled >已報價</button>
+              <button class='qbtn' name="accept" disabled >已接受報價</button>
             <?php endif; ?>
             
             <span class='result'></span>

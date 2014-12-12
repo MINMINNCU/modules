@@ -66,7 +66,7 @@ class modNotifyHelper
         $db     = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('item_id','buyer_status')));
+        $query->select($db->quoteName(array('id','item_id','buyer_status')));
         $query->from($db->quoteName('#__transactions'));
         $query->where($db->quoteName('buyer_id') . ' LIKE '. $user->id);
         $query->order($db->quoteName('created') .'DESC');
@@ -75,6 +75,8 @@ class modNotifyHelper
         $objs=$db->loadObjectlist();
 
         foreach ($objs as $i => $obj) {
+
+            $buy_transactions[$i][id]=$obj->id;
             
             $db->setQuery('SELECT * FROM `#__k2_items` WHERE `id`='.$obj->item_id);
             $items=$db->loadObjectlist();
@@ -95,7 +97,7 @@ class modNotifyHelper
         $db     = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('item_id','seller_status')));
+        $query->select($db->quoteName(array('id','item_id','seller_status')));
         $query->from($db->quoteName('#__transactions'));
         $query->where($db->quoteName('seller_id') . ' LIKE '. $user->id);
         $query->order($db->quoteName('created') .'DESC');
@@ -104,6 +106,9 @@ class modNotifyHelper
         $objs=$db->loadObjectlist();
 
         foreach ($objs as $i => $obj) {
+
+            $sell_transactions[$i][id]=$obj->id;
+            $sell_transactions[$i][item_id]=$obj->item_id;
             
             $db->setQuery('SELECT * FROM `#__k2_items` WHERE `id`='.$obj->item_id);
             $items=$db->loadObjectlist();
@@ -115,6 +120,13 @@ class modNotifyHelper
         }
         
         return $sell_transactions;
+    }
+    function getRegister()
+    {
+
+        $register=JFactory::getUser();
+
+        return $register;
     }
     
 }

@@ -11,6 +11,73 @@
 defined('_JEXEC') or die;
 ?>
 
+<script>
+
+var $K2 = jQuery.noConflict();
+$K2(document).ready(function(){
+
+  "use strict";
+
+  //accept transaction button click
+  $K2('#accept').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var itemid=sparent.find('.itemid').attr('value');
+	  var seller=$K2('#seller').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.confirmTransaction";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid, seller: seller, item: itemid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('交易成功確立，請開始填寫交易資訊');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+  //cancel transaction button click
+  $K2('#cancel').on('click',function(){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.cancelTransaction";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: sid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('交易已取消');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+
+
+
+
+});
+
+
+</script>
+
+
 <div class="notify-module-wrap<?php echo $moduleclass_sfx; ?>">
     <div class="notify-module-wrap-inner">
         
@@ -95,30 +162,7 @@ defined('_JEXEC') or die;
 	                     	<td>
 	                         	<?php echo $buy_transactions[$key][buyer_status] ?>
 	                     	</td>
-	                     	<td>
-	                         	<div class="transaction">
 
-						         	<?php if($register->id==$author): ?>
-						            
-							            <input style="visibility: hidden;" type="text" class="Qid" value="<?php echo $quotations[$i]->id; ?>"> <br>
-							            <!-- 此需求未接受過報價 -->
-							            <?php if(!$accept): ?>
-							            <button class='qbtn' name="accept" >接受報價</button>
-							            <!-- 此需求接受過報價 但非此報價-->
-							            <?php elseif (!($quotations[$i]->accept)):?>
-							              <button class='qbtn' name="accept" disabled >接受報價</button>
-							            <!-- 此報價已接受 為此報價-->
-							            <?php else:?>
-							              <button class='qbtn' name="accept" disabled >已報價</button>
-							            <?php endif; ?>
-							            
-							            <span class='result'></span>
-						          
-						          	<?php endif; ?>
-
-						      	</div>
-
-	                     	</td>
 						</tr>
                       <?php endforeach; ?>
 				<?php endif?>
@@ -132,6 +176,8 @@ defined('_JEXEC') or die;
 					<th>操作</th>
 				</tr>
 				</thead>
+				<input style="visibility: hidden;" type="text" id="seller" value="<?php echo $register->id; ?>"> 
+
 				<?php if($sell_transactions):?>
 					<?php foreach ($sell_transactions as $key=>$value): ?>
 						<tr class="trans_record">
@@ -143,6 +189,40 @@ defined('_JEXEC') or die;
 	                     	</td>
 	                     	<td>
 	                         	<?php echo $sell_transactions[$key][seller_status] ?>
+	                     	</td>
+
+	                     	<td>
+
+	                         	<div class="transaction">
+						            	
+						            	<input style="visibility: hidden;" type="text" class="itemid" value="<?php echo $sell_transactions[$key][item_id]; ?>"> <br>	
+							            <input style="visibility: hidden;" type="text" class="sid" value="<?php echo $sell_transactions[$key][id]; ?>"> <br>
+							            
+							            <!-- 確認有貨 -->
+							            <?php if($sell_transactions[$key][seller_status]=='對方已接受報價'): ?>
+							            <button class='sbtn' id="accept" >確認進行交易</button>
+							            <!-- 詢問填寫資料-->
+							            <?php elseif ($sell_transactions[$key][seller_status]=='請填寫資料'):?>
+							              <button class='sbtn' id="info">填寫資料</button>
+							            <!-- 交易進行中-->
+							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'):?>
+							              <button class='sbtn' id="received_cash">已收款</button>
+							            <!-- 交易完成-->
+							            <?php elseif ($sell_transactions[$key][seller_status]=='交易完成'):?>
+							              <button class='sbtn' id="evaluate">評價</button>
+							        	<?php endif; ?>
+
+								          
+							            <!-- 確認沒貨 -->
+							            <?php if($sell_transactions[$key][seller_status]=='對方已接受報價'): ?>
+							            <button class='sbtn' id="cancel" >取消</button>
+							            <!-- 交易進行中-->
+							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'):?>
+							              <button class='sbtn' id="sent_item">已出貨</button>
+							        	<?php endif; ?>
+
+						      	</div>
+
 	                     	</td>
 						</tr>
                       <?php endforeach; ?>
