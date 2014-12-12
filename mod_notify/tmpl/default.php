@@ -47,7 +47,7 @@ defined('_JEXEC') or die;
 				<?php endif?>
 			</table>
 		</div>
-		<div id="item_content" class="subNotify" style="">
+		<div id="item_content" class="subNotify">
 			<table class='table'>
 				<thead>
 				<tr>
@@ -73,6 +73,7 @@ defined('_JEXEC') or die;
 				<?php endif?>
 			</table>
 		</div>
+
 		<div id="trans_content" class="subNotify">
 			<table class='table'>
 				<thead>
