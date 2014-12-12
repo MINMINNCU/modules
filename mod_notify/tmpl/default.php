@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @package         Asikart.Module
@@ -9,6 +10,7 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
+
 <div class="notify-module-wrap<?php echo $moduleclass_sfx; ?>">
     <div class="notify-module-wrap-inner">
         
@@ -71,19 +73,85 @@ defined('_JEXEC') or die;
 				<?php endif?>
 			</table>
 		</div>
-		<div id="trans_content" class="subNotify table">
-			<table>
+
+		<div id="trans_content" class="subNotify">
+			<table class='table'>
 				<thead>
 				<tr>
-					<th>標題</th>
-					<th>人</th>
+					<th></th>
+					<th>需求項目</th>
 					<th>狀態</th>
+					<th>操作</th>
 				</tr>
 				</thead>
+				<?php if($buy_transactions):?>
+					<?php foreach ($buy_transactions as $key=>$value): ?>
+						<tr class="trans_record">
+							<td> 
+								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+							</td>
+							<td>
+	                         	<?php echo $buy_transactions[$key][title] ?>
+	                     	</td>
+	                     	<td>
+	                         	<?php echo $buy_transactions[$key][buyer_status] ?>
+	                     	</td>
+	                     	<td>
+	                         	<div class="transaction">
 
+						         	<?php if($register->id==$author): ?>
+						            
+							            <input style="visibility: hidden;" type="text" class="Qid" value="<?php echo $quotations[$i]->id; ?>"> <br>
+							            <!-- 此需求未接受過報價 -->
+							            <?php if(!$accept): ?>
+							            <button class='qbtn' name="accept" >接受報價</button>
+							            <!-- 此需求接受過報價 但非此報價-->
+							            <?php elseif (!($quotations[$i]->accept)):?>
+							              <button class='qbtn' name="accept" disabled >接受報價</button>
+							            <!-- 此報價已接受 為此報價-->
+							            <?php else:?>
+							              <button class='qbtn' name="accept" disabled >已報價</button>
+							            <?php endif; ?>
+							            
+							            <span class='result'></span>
+						          
+						          	<?php endif; ?>
+
+						      	</div>
+
+	                     	</td>
+						</tr>
+                      <?php endforeach; ?>
+				<?php endif?>
+			</table>
+			<table class='table'>
+				<thead>
+				<tr>
+					<th></th>
+					<th>報價項目</th>
+					<th>狀態</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<?php if($sell_transactions):?>
+					<?php foreach ($sell_transactions as $key=>$value): ?>
+						<tr class="trans_record">
+							<td> 
+								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+							</td>
+							<td>
+	                         	<?php echo $sell_transactions[$key][title] ?>
+	                     	</td>
+	                     	<td>
+	                         	<?php echo $sell_transactions[$key][seller_status] ?>
+	                     	</td>
+						</tr>
+                      <?php endforeach; ?>
+				<?php endif?>
 				<tr>
 				</tr>
 			</table>
+
 		</div>
         
     </div>
@@ -107,5 +175,11 @@ $K2('#trans_tab').on('click',function(){
 	$K2('#trans_tab').addClass('tab_visited');
 	$K2('.subNotify').hide();
 	$K2('#trans_content').show();
+});
+$K2(".trans_record").mouseenter(function(){
+  $K2(this).find('img').css('visibility','visible');
+});
+$K2(".trans_record").mouseleave(function(){
+  $K2(this).find('img').css('visibility','hidden');
 });
 </script>

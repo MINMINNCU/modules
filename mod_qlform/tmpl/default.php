@@ -11,6 +11,7 @@ JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.tooltip');
 
 ?>
+
 <style type="text/css">
 
 fieldset.additionalFields {display:none;}
@@ -22,6 +23,7 @@ fieldset.additionalFields {display:none;}
 }
 
 </style>
+
 
 <script>
 
@@ -49,7 +51,7 @@ var url      = window.location.href;     // returns full url
 
   //accept quotation button click
   $K2('.qbtn').on('click',function(){
-    var qparent=$K2(this).parent();
+  var qparent=$K2(this).parent();
   var qid=qparent.find('.Qid').attr('value');
   var author=$K2('#author').attr('value');
   var URLs="index.php?option=com_comment&task=quotation.acceptQuotation";
@@ -65,7 +67,7 @@ var url      = window.location.href;     // returns full url
           $K2(document).find('.qbtn').each(function(){
             $K2(this).attr("disabled", true);
           });
-          qparent.find('.qbtn').html("已報價");
+          qparent.find('.qbtn').html("已接受報價");
           // qparent.find('.result').html(msg);
         },
 

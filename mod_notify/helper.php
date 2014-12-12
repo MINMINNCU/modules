@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 class modNotifyHelper
 {
+
     public static function getNotice(&$params)
     {
         // init db
@@ -32,7 +33,7 @@ class modNotifyHelper
     }
     public static function getItem(&$params)
     {
-        $user    = JFactory::getUser() ;  
+        $user   = JFactory::getUser() ;  
         $db     = JFactory::getDbo();
 
         $query = $db->getQuery(true);
@@ -57,8 +58,63 @@ class modNotifyHelper
         
         return $items;
     }
-    public static function notify($userId,$content){
 
+    public static function getBuyTransactions(&$params)
+    {
+       
+        $user   = JFactory::getUser() ;  
+        $db     = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('item_id','buyer_status')));
+        $query->from($db->quoteName('#__transactions'));
+        $query->where($db->quoteName('buyer_id') . ' LIKE '. $user->id);
+        $query->order($db->quoteName('created') .'DESC');
+
+        $db->setQuery($query);
+        $objs=$db->loadObjectlist();
+
+        foreach ($objs as $i => $obj) {
+            
+            $db->setQuery('SELECT * FROM `#__k2_items` WHERE `id`='.$obj->item_id);
+            $items=$db->loadObjectlist();
+            foreach ($items as $i => $item) {
+                $buy_transactions[$i][title]= $item->title;
+            }
+
+            $buy_transactions[$i][buyer_status]=$obj->buyer_status;
+        }
+        
+        return $buy_transactions;
+    }
+
+       public static function getSellTransactions(&$params)
+    {
+       
+        $user   = JFactory::getUser() ;  
+        $db     = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('item_id','seller_status')));
+        $query->from($db->quoteName('#__transactions'));
+        $query->where($db->quoteName('seller_id') . ' LIKE '. $user->id);
+        $query->order($db->quoteName('created') .'DESC');
+
+        $db->setQuery($query);
+        $objs=$db->loadObjectlist();
+
+        foreach ($objs as $i => $obj) {
+            
+            $db->setQuery('SELECT * FROM `#__k2_items` WHERE `id`='.$obj->item_id);
+            $items=$db->loadObjectlist();
+            foreach ($items as $i => $item) {
+                $sell_transactions[$i][title]= $item->title;
+            }
+
+            $sell_transactions[$i][seller_status]=$obj->seller_status;
+        }
+        
+        return $sell_transactions;
     }
     
 }
