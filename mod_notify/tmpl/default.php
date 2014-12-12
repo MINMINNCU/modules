@@ -91,6 +91,30 @@ defined('_JEXEC') or die;
 	                     	<td>
 	                         	<?php echo $buy_transactions[$key][buyer_status] ?>
 	                     	</td>
+	                     	<td>
+	                         	<div class="transaction">
+
+						         	<?php if($register->id==$author): ?>
+						            
+							            <input style="visibility: hidden;" type="text" class="Qid" value="<?php echo $quotations[$i]->id; ?>"> <br>
+							            <!-- 此需求未接受過報價 -->
+							            <?php if(!$accept): ?>
+							            <button class='qbtn' name="accept" >接受報價</button>
+							            <!-- 此需求接受過報價 但非此報價-->
+							            <?php elseif (!($quotations[$i]->accept)):?>
+							              <button class='qbtn' name="accept" disabled >接受報價</button>
+							            <!-- 此報價已接受 為此報價-->
+							            <?php else:?>
+							              <button class='qbtn' name="accept" disabled >已報價</button>
+							            <?php endif; ?>
+							            
+							            <span class='result'></span>
+						          
+						          	<?php endif; ?>
+
+						      	</div>
+
+	                     	</td>
 						</tr>
                       <?php endforeach; ?>
 				<?php endif?>
