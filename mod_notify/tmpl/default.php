@@ -73,10 +73,11 @@ defined('_JEXEC') or die;
 				<?php endif?>
 			</table>
 		</div>
-		<div id="trans_content" class="subNotify table" style="">
+		<div id="trans_content" class="subNotify">
 			<table class='table'>
 				<thead>
 				<tr>
+					<th></th>
 					<th>需求項目</th>
 					<th>狀態</th>
 					<th>操作</th>
@@ -84,7 +85,10 @@ defined('_JEXEC') or die;
 				</thead>
 				<?php if($buy_transactions):?>
 					<?php foreach ($buy_transactions as $key=>$value): ?>
-						<tr>
+						<tr class="trans_record">
+							<td> 
+								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+							</td>
 							<td>
 	                         	<?php echo $buy_transactions[$key][title] ?>
 	                     	</td>
@@ -98,6 +102,7 @@ defined('_JEXEC') or die;
 			<table class='table'>
 				<thead>
 				<tr>
+					<th></th>
 					<th>報價項目</th>
 					<th>狀態</th>
 					<th>操作</th>
@@ -105,7 +110,10 @@ defined('_JEXEC') or die;
 				</thead>
 				<?php if($sell_transactions):?>
 					<?php foreach ($sell_transactions as $key=>$value): ?>
-						<tr>
+						<tr class="trans_record">
+							<td> 
+								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+							</td>
 							<td>
 	                         	<?php echo $sell_transactions[$key][title] ?>
 	                     	</td>
@@ -142,5 +150,11 @@ $K2('#trans_tab').on('click',function(){
 	$K2('#trans_tab').addClass('tab_visited');
 	$K2('.subNotify').hide();
 	$K2('#trans_content').show();
+});
+$K2(".trans_record").mouseenter(function(){
+  $K2(this).find('img').css('visibility','visible');
+});
+$K2(".trans_record").mouseleave(function(){
+  $K2(this).find('img').css('visibility','hidden');
 });
 </script>
