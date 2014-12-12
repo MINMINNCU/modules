@@ -87,7 +87,7 @@ defined('_JEXEC') or die;
 					<?php foreach ($buy_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
-								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+								<img class='img_contact' src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact'/>
 							</td>
 							<td>
 	                         	<?php echo $buy_transactions[$key][title] ?>
@@ -112,7 +112,24 @@ defined('_JEXEC') or die;
 					<?php foreach ($sell_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
-								<img src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact' style="visibility: hidden;width:22px;"/>
+								<img class='img_contact' src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact'/>
+								<div class='contact'>
+									<p class='close'>x</p>
+									<p>買方</p>
+									<form>
+										姓名：<input> </input>
+										電話：<input> </input>
+										備註：<input> </input>
+									</form>
+									<hr/>
+									<p>賣方</p>
+									<form>
+										姓名：<input> </input>
+										電話：<input> </input>
+										備註：<input> </input>
+									</form>
+									<button class="hopscotch-nav-button next hopscotch-next">送出</button>
+								</div>
 							</td>
 							<td>
 	                         	<?php echo $sell_transactions[$key][title] ?>
@@ -156,5 +173,11 @@ $K2(".trans_record").mouseenter(function(){
 });
 $K2(".trans_record").mouseleave(function(){
   $K2(this).find('img').css('visibility','hidden');
+});
+$K2('.img_contact').on('click',function(){
+	$K2(this).parent().find('.contact').show();
+});
+$K2('.close').on('click',function(){
+	$K2(this).parent().hide();
 });
 </script>
