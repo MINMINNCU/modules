@@ -66,7 +66,7 @@ class modNotifyHelper
         $db     = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('id','item_id','buyer_status')));
+        $query->select($db->quoteName(array('id','item_id','buyer_id','seller_id','buyer_status')));
         $query->from($db->quoteName('#__transactions'));
         $query->where($db->quoteName('buyer_id') . ' LIKE '. $user->id);
         $query->order($db->quoteName('created') .'DESC');
@@ -84,6 +84,18 @@ class modNotifyHelper
                 $buy_transactions[$i][title]= $item->title;
             }
 
+            $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->buyer_id);
+            $buyer_contact=$db->loadObject() || NULL;
+            $buy_transactions[$i][buyer_contact][name]=$buyer_contact->name;
+            $buy_transactions[$i][buyer_contact][phone]=$buyer_contact->phone;
+            $buy_transactions[$i][buyer_contact][option_text]=$buyer_contact->option_text;
+
+            $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->seller_id);
+            $seller_contact=$db->loadObject() || NULL;
+            $buy_transactions[$i][seller_contact][name]=$seller_contact->name;
+            $buy_transactions[$i][seller_contact][phone]=$seller_contact->phone;
+            $buy_transactions[$i][seller_contact][option_text]=$seller_contact->option_text;
+
             $buy_transactions[$i][buyer_status]=$obj->buyer_status;
         }
         
@@ -97,7 +109,7 @@ class modNotifyHelper
         $db     = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('id','item_id','seller_status')));
+        $query->select($db->quoteName(array('id','item_id','buyer_id','seller_id','seller_status')));
         $query->from($db->quoteName('#__transactions'));
         $query->where($db->quoteName('seller_id') . ' LIKE '. $user->id);
         $query->order($db->quoteName('created') .'DESC');
@@ -115,6 +127,18 @@ class modNotifyHelper
             foreach ($items as $i => $item) {
                 $sell_transactions[$i][title]= $item->title;
             }
+
+            $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->buyer_id);
+            $buyer_contact=$db->loadObject() || NULL;
+            $sell_transactions[$i][buyer_contact][name]=$buyer_contact->name;
+            $sell_transactions[$i][buyer_contact][phone]=$buyer_contact->phone;
+            $sell_transactions[$i][buyer_contact][option_text]=$buyer_contact->option_text;
+
+            $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->seller_id);
+            $seller_contact=$db->loadObject() || NULL;
+            $sell_transactions[$i][seller_contact][name]=$seller_contact->name;
+            $sell_transactions[$i][seller_contact][phone]=$seller_contact->phone;
+            $sell_transactions[$i][seller_contact][option_text]=$seller_contact->option_text;
 
             $sell_transactions[$i][seller_status]=$obj->seller_status;
         }

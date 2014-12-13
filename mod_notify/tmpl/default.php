@@ -252,6 +252,34 @@ $K2(document).ready(function(){
 						<tr class="trans_record">
 							<td> 
 								<img class='img_contact' src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact'/>
+								<div class='contact'>
+									<p class='close'>x</p>
+									<p>買方</p>
+									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
+										<form>
+											姓名：<input> </input>
+											電話：<input> </input>
+											備註：<input> </input>
+											<button>送出</button>
+										</form>
+									<?php else: ?>
+										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?>
+										電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?>
+										備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?>
+										<button>編輯</button>
+									<?php endif;?>
+									
+									<hr/>
+									<p>賣方</p>
+									<?php if (is_null($buy_transactions[$key][seller_contact][name])): ?>
+										<p>等待對方填寫資料</p>
+									<?php else: ?>
+										姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?>
+										電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?>
+										備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?>
+										<button>編輯</button>
+									<?php endif;?>
+								</div>
 							</td>
 							<td>
 	                         	<?php echo $buy_transactions[$key][title] ?>
@@ -310,19 +338,29 @@ $K2(document).ready(function(){
 								<div class='contact'>
 									<p class='close'>x</p>
 									<p>買方</p>
-									<form>
-										姓名：<input> </input>
-										電話：<input> </input>
-										備註：<input> </input>
-									</form>
+									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
+										<p>等待對方填寫資料</p>
+									<?php else: ?>
+										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?>
+										電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?>
+										備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?>
+									<?php endif;?>
+									
 									<hr/>
 									<p>賣方</p>
-									<form>
-										姓名：<input> </input>
-										電話：<input> </input>
-										備註：<input> </input>
-									</form>
-									<button class="hopscotch-nav-button next hopscotch-next">送出</button>
+									<?php if (is_null($buy_transactions[$key][seller_contact][name])): ?>
+										<form>
+											姓名：<input> </input>
+											電話：<input> </input>
+											備註：<input> </input>
+											<button>送出</button>
+										</form>
+									<?php else: ?>
+										姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?>
+										電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?>
+										備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?>
+										<button>編輯</button>
+									<?php endif;?>
 								</div>
 							</td>
 							<td>
