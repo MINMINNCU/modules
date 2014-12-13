@@ -266,7 +266,7 @@ $K2(document).ready(function(){
 				<?php endif?>
 			</table>
 		</div>
-		<div id="item_content" class="subNotify" style="">
+		<div id="item_content" class="subNotify">
 			<table class='table'>
 				<thead>
 				<tr>
@@ -292,6 +292,7 @@ $K2(document).ready(function(){
 				<?php endif?>
 			</table>
 		</div>
+
 		<div id="trans_content" class="subNotify">
 			<table class='table'>
 				<thead>

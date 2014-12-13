@@ -85,15 +85,15 @@ var url      = window.location.href;     // returns full url
 
 </script>
 
-<div class="qlform<?php echo $moduleclass_sfx; ?>">
+<div class="qlform<?php echo $moduleclass_sfx; ?>" style="width: auto; height: auto;">
 
 <?php 
 $author=$obj_helper->getAuthor($article_id); 
 $register=$obj_helper->getRegister();
 ?>
 
-<input style="visibility: hidden;" type="text" id="author" value="<?php echo $author; ?>"> <br>
-<input style="visibility: hidden;" type="text" id="register" value="<?php echo $register->id; ?>"> <br>
+<input style="display: none;" type="text" id="author" value="<?php echo $author; ?>"> <br>
+<input style="display: none;" type="text" id="register" value="<?php echo $register->id; ?>"> <br>
 
 <?php for($i = 0; $i < sizeof($quotations); $i++): 
 
@@ -102,12 +102,20 @@ $register=$obj_helper->getRegister();
         $url='/develop/media/k2/users/'.$user[0]->image;
 
         ?>
-        <div class="quotation">
+        <div style="float:left; height:auto;  ">
+        <img src="<?php echo JURI::base(true); ?>/media/k2/users/<?php echo $user[0]->image; ?>" alt="<?php echo $user->userName; ?>" width="60px" style="margin-top:14px; margin-left:4px; border-radius: 50%; border:1px solid #ccc;"/>
+        </div>
+        
+        <div class="quotation" style="margin-left:85px; width: auto;">
 
-            <input class='q_obj' style="visibility: hidden;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
-            <img src="<?php echo $url; ?>" alt="<?php echo $user->userName; ?>" width="48" class="userimg"/> <?php echo $quotations[$i]->created; ?>
-            <h2>$<?php echo $quotations[$i]->quotation; ?></h2>
-            <h3><?php echo $quotations[$i]->description; ?></h3>
+          <input class='q_obj' style="display: none;" userId='<?php echo $user_id; ?>' price='<?php echo $quotations[$i]->quotation; ?>'>
+          <div>
+            <div style="height:48px; line-height:48px; font-size:17px; float:left; margin-left:12px">報價 “</div>
+            <div style="height:48px; line-height:48px; font-size:26px;"><?php echo " ".$quotations[$i]->quotation." ”";?></div>
+            <div style="font-size:17px; margin-left:13px;"><?php echo $quotations[$i]->description; ?></div>
+          </div>
+          
+          <p align="right"><?php echo $quotations[$i]->created; ?></p>
 
           <?php if($register->id==$author): ?>
             
@@ -129,6 +137,7 @@ $register=$obj_helper->getRegister();
 
       </div>
 
+      <div>
 <?php endfor; ?>
 </div>
 
