@@ -130,7 +130,7 @@ $K2(document).ready(function(){
 
         success: function(msg){
 
-          	alert('請在確認雙方資訊後進行交易活動');
+          	alert('已通知買方收到款項');
         },
 
          error:function(xhr, ajaxOptions, thrownError){ 
@@ -154,7 +154,55 @@ $K2(document).ready(function(){
 
         success: function(msg){
 
-          	alert('請在確認雙方資訊後進行交易活動');
+          	alert('已通知買方寄出貨物');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+  //買方已付款
+  $K2('#paid_cash').on('click',function(){
+		var bparent=$K2(this).parent();
+	  var bid=bparent.find('.bid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.paidCash";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: bid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('已通知賣方匯出款項');
+        },
+
+         error:function(xhr, ajaxOptions, thrownError){ 
+            alert('系統有錯誤發生');
+         }
+    });
+
+  });
+
+   //買方已收貨
+  $K2('#received_item').on('click',function(){
+		var bparent=$K2(this).parent();
+	  var bid=bparent.find('.bid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.receivedItem";
+
+  $K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {id: bid} ,
+        type:"POST",
+
+        success: function(msg){
+
+          	alert('已通知賣方收到貨物');
         },
 
          error:function(xhr, ajaxOptions, thrownError){ 
@@ -295,20 +343,20 @@ $K2(document).ready(function(){
 							            <input style="visibility: hidden;" type="text" class="bid" value="<?php echo $buy_transactions[$key][id]; ?>"> <br>
 							            
 							            <!-- 詢問填寫資料-->
-							            <?php if ($sell_transactions[$key][buyer_status]=='請填寫資料'):?>
-							              <button class='sbtn' id="info">填寫資料</button>
+							            <?php if ($buy_transactions[$key][buyer_status]=='請填寫資料'):?>
+							              <button class='sbtn' id="b_info">填寫資料</button>
 							            <!-- 交易進行中-->
-							            <?php elseif ($sell_transactions[$key][buyer_status]=='交易進行中'):?>
-							              <button class='sbtn' id="received_cash">已付款</button>
+							            <?php elseif ($buy_transactions[$key][buyer_status]=='交易進行中'):?>
+							              <button class='sbtn' id="paid_cash">已付款</button>
 							            <!-- 交易完成-->
-							            <?php elseif ($sell_transactions[$key][buyer_status]=='交易完成'):?>
-							              <button class='sbtn' id="evaluate">評價</button>
+							            <?php elseif ($buy_transactions[$key][buyer_status]=='交易完成'):?>
+							              <button class='sbtn' id="b_evaluate">評價</button>
 							        		<?php endif; ?>
 
 								         
 							            <!-- 交易進行中-->
-							            <?php if ($sell_transactions[$key][buyer_status]=='交易進行中'):?>
-							              <button class='sbtn' id="sent_item">已收貨</button>
+							            <?php if ($buy_transactions[$key][buyer_status]=='交易進行中'):?>
+							              <button class='sbtn' id="received_item">已收貨</button>
 							        	<?php endif; ?>
 
 						      			</div>
@@ -388,7 +436,7 @@ $K2(document).ready(function(){
 							              <button class='sbtn' id="received_cash">已收款</button>
 							            <!-- 交易完成-->
 							            <?php elseif ($sell_transactions[$key][seller_status]=='交易完成'):?>
-							              <button class='sbtn' id="evaluate">評價</button>
+							              <button class='sbtn' id="s_evaluate">評價</button>
 							        	<?php endif; ?>
 
 								          
