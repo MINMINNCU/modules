@@ -120,7 +120,7 @@ $K2(document).ready(function(){
   $K2('#received_cash').on('click',function(){
 		var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
-	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+	  var URLs="index.php?option=com_comment&task=quotation.receivedCash";
 
   $K2.ajax({
         dataType:'text',
@@ -144,7 +144,7 @@ $K2(document).ready(function(){
   $K2('#sent_item').on('click',function(){
 		var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
-	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+	  var URLs="index.php?option=com_comment&task=quotation.sentItem";
 
   $K2.ajax({
         dataType:'text',
@@ -244,6 +244,9 @@ $K2(document).ready(function(){
 					<th>操作</th>
 				</tr>
 				</thead>
+
+				<input style="visibility: hidden;" type="text" id="buyer" value="<?php echo $register->id; ?>"> 
+
 				<?php if($buy_transactions):?>
 					<?php foreach ($buy_transactions as $key=>$value): ?>
 						<tr class="trans_record">
@@ -255,6 +258,33 @@ $K2(document).ready(function(){
 	                     	</td>
 	                     	<td>
 	                         	<?php echo $buy_transactions[$key][buyer_status] ?>
+	                     	</td>
+	                     		<td>
+
+	                         	<div class="transaction">
+						            	
+						            	<input style="visibility: hidden;" type="text" class="itemid" value="<?php echo $buy_transactions[$key][item_id]; ?>"> <br>	
+							            <input style="visibility: hidden;" type="text" class="bid" value="<?php echo $buy_transactions[$key][id]; ?>"> <br>
+							            
+							            <!-- 詢問填寫資料-->
+							            <?php if ($sell_transactions[$key][buyer_status]=='請填寫資料'):?>
+							              <button class='sbtn' id="info">填寫資料</button>
+							            <!-- 交易進行中-->
+							            <?php elseif ($sell_transactions[$key][buyer_status]=='交易進行中'):?>
+							              <button class='sbtn' id="received_cash">已付款</button>
+							            <!-- 交易完成-->
+							            <?php elseif ($sell_transactions[$key][buyer_status]=='交易完成'):?>
+							              <button class='sbtn' id="evaluate">評價</button>
+							        		<?php endif; ?>
+
+								         
+							            <!-- 交易進行中-->
+							            <?php if ($sell_transactions[$key][buyer_status]=='交易進行中'):?>
+							              <button class='sbtn' id="sent_item">已收貨</button>
+							        	<?php endif; ?>
+
+						      			</div>
+
 	                     	</td>
 
 						</tr>
