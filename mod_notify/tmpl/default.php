@@ -344,20 +344,21 @@ $K2(document).ready(function(){
 							            
 							            <!-- 詢問填寫資料-->
 							            <?php if ($buy_transactions[$key][buyer_status]=='請填寫資料'):?>
-							              <button class='sbtn' id="b_info">填寫資料</button>
+							              <button class='bbtn' id="b_info">填寫資料</button>
 							            <!-- 交易進行中-->
-							            <?php elseif ($buy_transactions[$key][buyer_status]=='交易進行中'):?>
-							              <button class='sbtn' id="paid_cash">已付款</button>
-							            <!-- 交易完成-->
-							            <?php elseif ($buy_transactions[$key][buyer_status]=='交易完成'):?>
-							              <button class='sbtn' id="b_evaluate">評價</button>
+							            <?php elseif ($buy_transactions[$key][buyer_status]=='交易進行中'||$buy_transactions[$key][buyer_status]=='交易完成'):?>
+							              <button class='bbtn' id="paid_cash">已付款</button>			      
 							        		<?php endif; ?>
 
-								         
 							            <!-- 交易進行中-->
-							            <?php if ($buy_transactions[$key][buyer_status]=='交易進行中'):?>
-							              <button class='sbtn' id="received_item">已收貨</button>
+							            <?php if ($buy_transactions[$key][buyer_status]=='交易進行中' ||$buy_transactions[$key][buyer_status]=='交易完成'):?>
+							              <button class='bbtn' id="received_item">已收貨</button>
 							        	<?php endif; ?>
+
+							        		<!-- 交易完成-->
+							            <?php if ($buy_transactions[$key][buyer_status]=='交易完成'):?>
+							             <button class='bbtn' id="b_evaluate">評價</button>
+							             <?php endif; ?>
 
 						      			</div>
 
@@ -432,20 +433,21 @@ $K2(document).ready(function(){
 							            <?php elseif ($sell_transactions[$key][seller_status]=='請填寫資料'):?>
 							              <button class='sbtn' id="info">填寫資料</button>
 							            <!-- 交易進行中-->
-							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'):?>
+							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'|| $sell_transactions[$key][seller_status]=='交易完成'):?>
 							              <button class='sbtn' id="received_cash">已收款</button>
-							            <!-- 交易完成-->
-							            <?php elseif ($sell_transactions[$key][seller_status]=='交易完成'):?>
-							              <button class='sbtn' id="s_evaluate">評價</button>
-							        	<?php endif; ?>
-
+							             <?php endif; ?>
 								          
 							            <!-- 確認沒貨 -->
 							            <?php if($sell_transactions[$key][seller_status]=='對方已接受報價'): ?>
 							            <button class='sbtn' id="cancel" >取消</button>
 							            <!-- 交易進行中-->
-							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'):?>
+							            <?php elseif ($sell_transactions[$key][seller_status]=='交易進行中'|| $sell_transactions[$key][seller_status]=='交易完成'):?>
 							              <button class='sbtn' id="sent_item">已出貨</button>
+							        	<?php endif; ?>
+
+							        		<!-- 交易完成-->
+							            <?php if ($sell_transactions[$key][seller_status]=='交易完成'):?>
+							              <button class='sbtn' id="s_evaluate">評價</button>
 							        	<?php endif; ?>
 
 						      	</div>
