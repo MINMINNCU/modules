@@ -93,15 +93,29 @@ $K2(document).ready(function(){
   });
 
 	//送出買方資料
-  $K2('#bsubmit').on('click',function(){
-		var sparent=$K2(this).parent();
+  $K2('#bsubmit').submit(function(event){
+	var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
 	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
+	  var postData=$K2(this).serializeArray();
+	  var name=postData[0].vaule;
+	  var phone=postData[1].vaule;
+	  var option_text=postData[2].vaule;
+	 if (typeof event == "undefined"){
+      event = window.event;
+   	}
+	event.preventDefault(); //STOP default action
+    event.unbind(); //unbind. to stop multiple form submit.
 
-  $K2.ajax({
+  	$K2.ajax({
         dataType:'text',
         url: URLs,
-        data: {id: sid} ,
+        data: {
+        	id: sid,
+        	name:name,
+        	phone:phone,
+        	option_text:option_text
+        } ,
         type:"POST",
 
         success: function(msg){
@@ -315,11 +329,11 @@ $K2(document).ready(function(){
 									<p class='close'>x</p>
 									<p>買方</p>
 									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
-										<form>
-											姓名：<input> </input>
-											電話：<input> </input>
-											備註：<input> </input>
-											<button>送出</button>
+										<form id='bsubmit'>
+											姓名：<input name='contact_name'/> 
+											電話：<input name='contact_phone'/> 
+											備註：<input name='contact_option'/>
+											<button type='submit'>送出</button>
 										</form>
 									<?php else: ?>
 										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?>
