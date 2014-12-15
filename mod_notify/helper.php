@@ -85,13 +85,13 @@ class modNotifyHelper
             }
 
             $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->buyer_id);
-            $buyer_contact=$db->loadObject() || NULL;
+            $buyer_contact=$db->loadObject();
             $buy_transactions[$i][buyer_contact][name]=$buyer_contact->name;
             $buy_transactions[$i][buyer_contact][phone]=$buyer_contact->phone;
             $buy_transactions[$i][buyer_contact][option_text]=$buyer_contact->option_text;
 
             $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->seller_id);
-            $seller_contact=$db->loadObject() || NULL;
+            $seller_contact=$db->loadObject();
             $buy_transactions[$i][seller_contact][name]=$seller_contact->name;
             $buy_transactions[$i][seller_contact][phone]=$seller_contact->phone;
             $buy_transactions[$i][seller_contact][option_text]=$seller_contact->option_text;
@@ -129,13 +129,13 @@ class modNotifyHelper
             }
 
             $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->buyer_id);
-            $buyer_contact=$db->loadObject() || NULL;
+            $buyer_contact=$db->loadObject();
             $sell_transactions[$i][buyer_contact][name]=$buyer_contact->name;
             $sell_transactions[$i][buyer_contact][phone]=$buyer_contact->phone;
             $sell_transactions[$i][buyer_contact][option_text]=$buyer_contact->option_text;
 
             $db->setQuery('SELECT * FROM `#__contact` WHERE `account_id`='.$obj->seller_id);
-            $seller_contact=$db->loadObject() || NULL;
+            $seller_contact=$db->loadObject();
             $sell_transactions[$i][seller_contact][name]=$seller_contact->name;
             $sell_transactions[$i][seller_contact][phone]=$seller_contact->phone;
             $sell_transactions[$i][seller_contact][option_text]=$seller_contact->option_text;
