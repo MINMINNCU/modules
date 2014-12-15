@@ -23,7 +23,7 @@ $K2(document).ready(function(){
   	var sparent=$K2(this).parent();
   	var sid=sparent.find('.sid').attr('value');
   	var itemid=sparent.find('.itemid').attr('value');
-  	var seller=$K2('#seller').attr('value');
+  	var seller=$K2('#accountId').attr('value');
   	var URLs="index.php?option=com_comment&task=quotation.confirmTransaction";
 
   	$K2.ajax({
@@ -67,61 +67,111 @@ $K2(document).ready(function(){
   	});
 
   });
-
   //送出賣方資料
-  $K2('#ssubmit').on('click',function(){
-  	var sparent=$K2(this).parent();
-  	var sid=sparent.find('.sid').attr('value');
-  	var URLs="index.php?option=com_comment&task=quotation.fillSellerContact";
-
+  $K2('#ssubmit').submit(function(event){
+		var sparent=$K2(this).parent();
+	  var sid=sparent.find('.sid').attr('value');
+	  var URLs="index.php?option=com_comment&task=quotation.fillSellerContact";
+	  var postData=$K2(this).serializeArray();
+	  var accountId=$K2(document).find('#accountId').attr('value');
+	  var name=postData[0].value;
+	  var phone=postData[1].value;
+	  var option_text=postData[2].value;
+		event.preventDefault(); //STOP default action
   	$K2.ajax({
-  		dataType:'text',
-  		url: URLs,
-  		data: {id: sid} ,
-  		type:"POST",
+        dataType:'text',
+        url: URLs,
+        data: {
+        	accountId : accountId,
+        	sid : sid,
+        	name : name,
+        	phone : phone,
+        	option_text : option_text
+        } ,
+        type:"POST",
 
-  		success: function(msg){
+			success: function(msg){
+				alert('請在確認雙方資訊後進行交易活動');
+				location.reload();
+			},
 
-  			alert('請在確認雙方資訊後進行交易活動');
-  		},
+			error:function(xhr, ajaxOptions, thrownError){ 
+				alert('系統有錯誤發生');
+			}
+		});
 
-  		error:function(xhr, ajaxOptions, thrownError){ 
-  			alert('系統有錯誤發生');
-  		}
-  	});
-
-  });
+	});
 
 	//送出買方資料
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5b724b44bb86510a3deaf00aeef961fdc1551446
   $K2('#bsubmit').submit(function(event){
-	var sparent=$K2(this).parent();
+		var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
 	  var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
 	  var postData=$K2(this).serializeArray();
-	  var name=postData[0].vaule;
-	  var phone=postData[1].vaule;
-	  var option_text=postData[2].vaule;
-	 if (typeof event == "undefined"){
-      event = window.event;
-   	}
-	event.preventDefault(); //STOP default action
-    event.unbind(); //unbind. to stop multiple form submit.
+	  var accountId=$K2(document).find('#accountId').attr('value');
+	  var name=postData[0].value;
+	  var phone=postData[1].value;
+	  var option_text=postData[2].value;
+		event.preventDefault(); //STOP default action
 
   	$K2.ajax({
         dataType:'text',
         url: URLs,
         data: {
-        	id: sid,
-        	name:name,
-        	phone:phone,
-        	option_text:option_text
+        	accountId : accountId,
+        	sid : sid,
+        	name : name,
+        	phone : phone,
+        	option_text : option_text
+        } ,
+        type:"POST",
+
+			success: function(msg){
+				alert('請在確認雙方資訊後進行交易活動');
+				location.reload();
+			},
+
+			error:function(xhr, ajaxOptions, thrownError){ 
+				alert('系統有錯誤發生');
+			}
+		});
+
+	});
+
+	// 編輯聯絡資料
+	$K2('.edit_contact_btn').on('click',function(){
+		$K2(this).parent().hide();
+		$K2(this).parent().parent().find('form').show();
+	});
+	//更新資料
+	$K2('#submit_update').submit(function(event){
+		var sparent=$K2(this).parent();
+	  var URLs="index.php?option=com_comment&task=quotation.updateContact";
+	  var postData=$K2(this).serializeArray();
+	  var accountId=$K2(document).find('#accountId').attr('value');
+	  var name=postData[0].value;
+	  var phone=postData[1].value;
+	  var option_text=postData[2].value;
+		event.preventDefault(); //STOP default action
+  	$K2.ajax({
+        dataType:'text',
+        url: URLs,
+        data: {
+        	accountId : accountId,
+        	name : name,
+        	phone : phone,
+        	option_text : option_text
         } ,
         type:"POST",
 
 			success: function(msg){
 
-				alert('請在確認雙方資訊後進行交易活動');
+				alert('更新成功');
+				location.reload();
 			},
 
 			error:function(xhr, ajaxOptions, thrownError){ 
@@ -318,37 +368,48 @@ $K2(document).ready(function(){
 						<th>操作</th>
 					</tr>
 				</thead>
-				<input style="visibility: hidden;" type="text" id="buyer" value="<?php echo $register->id; ?>"> 
+				<tr>
+					<h3>你是買家的交易</h3>
+				</tr>
+				<input style="visibility: hidden;" type="text" id="accountId" value="<?php echo $register->id; ?>"> 
 				<?php if($buy_transactions):?>
 					<?php foreach ($buy_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
 								<img class='img_contact' src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact'/>
 								<div class='contact'>
+									<input style="visibility: hidden;" type="text" class="sid" value="<?php echo $sell_transactions[$key][id]; ?>"> <br>
 									<p class='close'>x</p>
 									<p>買方</p>
 									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
-										<form id='bsubmit'>
+										<form id='bsubmit' action="default.php" method="POST">
 											姓名：<input name='contact_name'/> 
 											電話：<input name='contact_phone'/> 
 											備註：<input name='contact_option'/>
 											<button type='submit'>送出</button>
 										</form>
 									<?php else: ?>
-										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?>
-										電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?>
-										備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?>
-										<button>編輯</button>
+										<form id='submit_update' action="default.php" method="POST" style='display:none;'>
+											姓名：<input name='contact_name' value=<?php echo $buy_transactions[$key][buyer_contact][name] ?> /> 
+											電話：<input name='contact_phone' value=<?php echo $buy_transactions[$key][buyer_contact][phone] ?> /> 
+											備註：<input name='contact_option' value=<?php echo $buy_transactions[$key][buyer_contact][option_text] ?> />
+											<button type='submit'>送出</button>
+										</form>
+										<div>
+											姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?> <br/>
+											電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?><br/>
+											備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?><br/>
+											<button class='edit_contact_btn'>編輯</button>
+										</div>
 									<?php endif;?>
 									<hr/>
 									<p>賣方</p>
 									<?php if (is_null($buy_transactions[$key][seller_contact][name])): ?>
 										<p>等待對方填寫資料</p>
 									<?php else: ?>
-										姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?>
-										電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?>
-										備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?>
-										<button>編輯</button>
+										姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?><br/>
+										電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?><br/>
+										備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?><br/>
 									<?php endif;?>
 								</div>
 							</td>
@@ -396,37 +457,48 @@ $K2(document).ready(function(){
 						<th>操作</th>
 					</tr>
 				</thead>
-				<input style="visibility: hidden;" type="text" id="seller" value="<?php echo $register->id; ?>"> 
-
+				<tr>
+					<h3>你是賣家的交易</h3>
+				</tr>
+				<input style="visibility: hidden;" type="text" id="accountId##" value="<?php echo $register->id; ?>"> 
 				<?php if($sell_transactions):?>
 					<?php foreach ($sell_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
 								<img class='img_contact' src='<?php echo JURI::base(true); ?>/images/contact.png' alt='contact'/>
 								<div class='contact'>
+									<input style="visibility: hidden;" type="text" class="sid" value="<?php echo $sell_transactions[$key][id]; ?>"> <br>
 									<p class='close'>x</p>
 									<p>買方</p>
 									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
 										<p>等待對方填寫資料</p>
-										<?php else: ?>
-											姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?>
-											電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?>
-											備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?>
+									<?php else: ?>
+										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?><br/>
+										電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?><br/>
+										備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?><br/>
 									<?php endif;?>
 									<hr/>
 									<p>賣方</p>
 									<?php if (is_null($buy_transactions[$key][seller_contact][name])): ?>
-										<form>
-											姓名：<input> </input>
-											電話：<input> </input>
-											備註：<input> </input>
-											<button>送出</button>
+										<form id='ssubmit' action="default.php" method="POST">
+											姓名：<input name='contact_name'/> 
+											電話：<input name='contact_phone'/> 
+											備註：<input name='contact_option'/>
+											<button type='submit'>送出</button>
 										</form>
 									<?php else: ?>
-										姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?>
-										電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?>
-										備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?>
-										<button>編輯</button>
+										<form id='ssubmit_update' action="default.php" method="POST" style='display:none;'>
+											姓名：<input name='contact_name' value=<?php echo $buy_transactions[$key][seller_contact][name] ?> /> 
+											電話：<input name='contact_phone' value=<?php echo $buy_transactions[$key][seller_contact][phone] ?> /> 
+											備註：<input name='contact_option' value=<?php echo $buy_transactions[$key][seller_contact][option_text] ?> />
+											<button type='submit'>送出</button>
+										</form>
+										<div>
+											姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?><br/>
+											電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?><br/>
+											備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?><br/>
+											<button class='edit_contact_btn'>編輯</button>
+									</div>
 									<?php endif;?>
 								</div>
 							</td>
