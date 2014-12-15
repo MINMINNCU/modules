@@ -93,18 +93,7 @@ $K2(document).ready(function(){
   });
 
 	//送出買方資料
-<<<<<<< HEAD
-	$K2('#bsubmit').on('click',function(){
-		var sparent=$K2(this).parent();
-		var sid=sparent.find('.sid').attr('value');
-		var URLs="index.php?option=com_comment&task=quotation.fillBuyerContact";
 
-		$K2.ajax({
-			dataType:'text',
-			url: URLs,
-			data: {id: sid} ,
-			type:"POST",
-=======
   $K2('#bsubmit').submit(function(event){
 	var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
@@ -129,7 +118,6 @@ $K2(document).ready(function(){
         	option_text:option_text
         } ,
         type:"POST",
->>>>>>> 6445a982b4b06ff44861371b005169ee65f25707
 
 			success: function(msg){
 
@@ -159,9 +147,7 @@ $K2(document).ready(function(){
 
   			alert('已通知買方收到款項');
 
-  			$K2(document).find('#received_cash').each(function(){
-  				$K2(this).attr("disabled", true);
-  			});
+  			$K2(document).find('#received_cash').attr("disabled", true);
 
   		},
 
@@ -187,9 +173,9 @@ $K2(document).ready(function(){
   		success: function(msg){
 
   			alert('已通知買方寄出貨物');
-  			$K2(document).find('#sent_item').each(function(){
-  				$K2(this).attr("disabled", true);
-  			});
+
+  			$K2(document).find('#sent_item').attr("disabled", true);
+
   		},
 
   		error:function(xhr, ajaxOptions, thrownError){ 
@@ -215,6 +201,7 @@ $K2(document).ready(function(){
 
   			alert('已通知賣方匯出款項');
 
+  			$K2(document).find('#paid_cash').attr("disabled", true);
 
   		},
 
@@ -240,6 +227,8 @@ $K2(document).ready(function(){
    		success: function(msg){
 
    			alert('已通知賣方收到貨物');
+
+   			 $K2(document).find('#received_item').attr("disabled", true);
    		},
 
    		error:function(xhr, ajaxOptions, thrownError){ 
