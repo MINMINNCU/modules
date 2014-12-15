@@ -103,10 +103,6 @@ $K2(document).ready(function(){
 	});
 
 	//送出買方資料
-<<<<<<< HEAD
-
-=======
->>>>>>> 5b724b44bb86510a3deaf00aeef961fdc1551446
   $K2('#bsubmit').submit(function(event){
 		var sparent=$K2(this).parent();
 	  var sid=sparent.find('.sid').attr('value');
