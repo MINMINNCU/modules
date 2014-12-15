@@ -91,8 +91,8 @@ $K2(document).ready(function(){
         type:"POST",
 
 			success: function(msg){
-
 				alert('請在確認雙方資訊後進行交易活動');
+				location.reload();
 			},
 
 			error:function(xhr, ajaxOptions, thrownError){ 
@@ -127,8 +127,8 @@ $K2(document).ready(function(){
         type:"POST",
 
 			success: function(msg){
-
 				alert('請在確認雙方資訊後進行交易活動');
+				location.reload();
 			},
 
 			error:function(xhr, ajaxOptions, thrownError){ 
@@ -167,6 +167,7 @@ $K2(document).ready(function(){
 			success: function(msg){
 
 				alert('更新成功');
+				location.reload();
 			},
 
 			error:function(xhr, ajaxOptions, thrownError){ 
