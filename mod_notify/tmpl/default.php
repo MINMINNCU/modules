@@ -353,21 +353,21 @@ $K2(document).ready(function(){
 		</div>
 
 		<div id="trans_content" class="subNotify">
-			<!-- 使用者為買家 -->
-			<table class='table'>
-				<thead>
+			<!-- 使用者為買家 -->		
+			<input style="visibility: hidden;" type="text" id="accountId" value="<?php echo $register->id; ?>"> 
+			<?php if($buy_transactions):?>
+				<table class='table'>
+					<thead>
+						<tr>
+							<th></th>
+							<th>需求項目</th>
+							<th>狀態</th>
+							<th>操作</th>
+						</tr>
+					</thead>
 					<tr>
-						<th></th>
-						<th>需求項目</th>
-						<th>狀態</th>
-						<th>操作</th>
+						<h3>你是買家的交易</h3>
 					</tr>
-				</thead>
-				<tr>
-					<h3>你是買家的交易</h3>
-				</tr>
-				<input style="visibility: hidden;" type="text" id="accountId" value="<?php echo $register->id; ?>"> 
-				<?php if($buy_transactions):?>
 					<?php foreach ($buy_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
@@ -443,20 +443,20 @@ $K2(document).ready(function(){
 				<?php endif?>
 			</table>
 			<!-- 使用者為賣家 -->
-			<table class='table'>
-				<thead>
+			<?php if($sell_transactions):?>
+				<table class='table'>
+					<thead>
+						<tr>
+							<th></th>
+							<th>報價項目</th>
+							<th>狀態</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<input style="visibility: hidden;" type="text" id="accountId##" value="<?php echo $register->id; ?>"> 
 					<tr>
-						<th></th>
-						<th>報價項目</th>
-						<th>狀態</th>
-						<th>操作</th>
+						<h3>你是賣家的交易</h3>
 					</tr>
-				</thead>
-				<tr>
-					<h3>你是賣家的交易</h3>
-				</tr>
-				<input style="visibility: hidden;" type="text" id="accountId##" value="<?php echo $register->id; ?>"> 
-				<?php if($sell_transactions):?>
 					<?php foreach ($sell_transactions as $key=>$value): ?>
 						<tr class="trans_record">
 							<td> 
@@ -465,16 +465,16 @@ $K2(document).ready(function(){
 									<input style="visibility: hidden;" type="text" class="sid" value="<?php echo $sell_transactions[$key][id]; ?>"> <br>
 									<p class='close'>x</p>
 									<p>買方</p>
-									<?php if (is_null($buy_transactions[$key][buyer_contact][name])): ?>
+									<?php if (is_null($sell_transactions[$key][buyer_contact][name])): ?>
 										<p>等待對方填寫資料</p>
 									<?php else: ?>
-										姓名：<?php echo $buy_transactions[$key][buyer_contact][name] ?><br/>
-										電話：<?php echo $buy_transactions[$key][buyer_contact][phone] ?><br/>
-										備註：<?php echo $buy_transactions[$key][buyer_contact][option_text] ?><br/>
+										姓名：<?php echo $sell_transactions[$key][buyer_contact][name] ?><br/>
+										電話：<?php echo $sell_transactions[$key][buyer_contact][phone] ?><br/>
+										備註：<?php echo $sell_transactions[$key][buyer_contact][option_text] ?><br/>
 									<?php endif;?>
 									<hr/>
 									<p>賣方</p>
-									<?php if (is_null($buy_transactions[$key][seller_contact][name])): ?>
+									<?php if (is_null($sell_transactions[$key][seller_contact][name])): ?>
 										<form id='ssubmit' action="default.php" method="POST">
 											姓名：<input name='contact_name'/> 
 											電話：<input name='contact_phone'/> 
@@ -482,18 +482,18 @@ $K2(document).ready(function(){
 											<button type='submit'>送出</button>
 										</form>
 									<?php else: ?>
-										<form id='ssubmit_update' action="default.php" method="POST" style='display:none;'>
-											姓名：<input name='contact_name' value=<?php echo $buy_transactions[$key][seller_contact][name] ?> /> 
-											電話：<input name='contact_phone' value=<?php echo $buy_transactions[$key][seller_contact][phone] ?> /> 
-											備註：<input name='contact_option' value=<?php echo $buy_transactions[$key][seller_contact][option_text] ?> />
+										<form id='submit_update' action="default.php" method="POST" style='display:none;'>
+											姓名：<input name='contact_name' value=<?php echo $sell_transactions[$key][seller_contact][name] ?> /> 
+											電話：<input name='contact_phone' value=<?php echo $sell_transactions[$key][seller_contact][phone] ?> /> 
+											備註：<input name='contact_option' value=<?php echo $sell_transactions[$key][seller_contact][option_text] ?> />
 											<button type='submit'>送出</button>
 										</form>
 										<div>
-											姓名：<?php echo $buy_transactions[$key][seller_contact][name] ?><br/>
-											電話：<?php echo $buy_transactions[$key][seller_contact][phone] ?><br/>
-											備註：<?php echo $buy_transactions[$key][seller_contact][option_text] ?><br/>
+											姓名：<?php echo $sell_transactions[$key][seller_contact][name] ?><br/>
+											電話：<?php echo $sell_transactions[$key][seller_contact][phone] ?><br/>
+											備註：<?php echo $sell_transactions[$key][seller_contact][option_text] ?><br/>
 											<button class='edit_contact_btn'>編輯</button>
-									</div>
+										</div>
 									<?php endif;?>
 								</div>
 							</td>
